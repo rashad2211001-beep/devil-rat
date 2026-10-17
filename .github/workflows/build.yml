@@ -20,12 +20,11 @@ jobs:
         distribution: 'temurin'
 
     - name: Setup Android SDK
-      run: |
-        echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --licenses || true
-        $ANDROID_HOME/tools/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" || true
+      uses: android-actions/setup-android@v3
 
-    - name: Build Debug APK
+    - name: Build with Gradle
       run: |
+        chmod +x gradlew || true
         gradle wrapper --gradle-version 8.2
         ./gradlew assembleDebug --no-daemon
 
